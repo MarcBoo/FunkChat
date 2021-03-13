@@ -26,7 +26,6 @@ def handle_client(client):  # Takes client socket as argument.
         client.send(bytes("Your name is already taken, bye", "utf8"))
         client.close()
         del clients[client]
-        del checkUsers[name]
         broadcast(bytes("%s has left the chat." % name, "utf8"))
     else:
         welcome = 'Welcome %s! If you ever want to quit, type {quit} to exit.' % name
