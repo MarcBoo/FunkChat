@@ -25,7 +25,7 @@ def handle_client(client):  # Takes client socket as argument.
     clients[client] = name
 
 
-""" name = client.recv(BUFSIZ).decode("utf8")
+    """ name = client.recv(BUFSIZ).decode("utf8")
 
     if name in clients:
         client.send(bytes("Your name is already taken, bye", "utf8"))
@@ -40,7 +40,6 @@ def handle_client(client):  # Takes client socket as argument.
         clients[client] = name
 
         print(clients.items()) """
-
 
     while True:
         msg = client.recv(BUFSIZ)
