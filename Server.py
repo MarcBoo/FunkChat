@@ -9,7 +9,7 @@ def accept_incoming_connections():
     while True:
         client, client_address = SERVER.accept()
         print("%s:%s has connected." % client_address)
-        client.send(bytes("Greetings from the cave! Now type your name and press enter!", "utf8"))
+        client.send(bytes("Now type your name and press enter!", "utf8"))
         addresses[client] = client_address
         Thread(target=handle_client, args=(client,)).start()
 
@@ -17,12 +17,12 @@ def accept_incoming_connections():
 def handle_client(client):  # Takes client socket as argument.
     """Handles a single client connection."""
 
-    # Looks super trash but works
+
     # Username saved in name
-    # if not already in it, will be appended to checkUsers-list
-    # delete after leaving does not work yet
+    # if not already in it, will be appended to clients
+    # delete after leaving does not work properly yet
     name = client.recv(BUFSIZ).decode("utf8")
-    if name in checkUsers:
+    if name in clients.values():
         client.send(bytes("Your name is already taken, bye", "utf8"))
         client.close()
         del clients[client]
@@ -34,7 +34,6 @@ def handle_client(client):  # Takes client socket as argument.
         broadcast(bytes(msg, "utf8"))
         clients[client] = name
         print(clients)
-        checkUsers.append(name)
 
     while True:
         msg = client.recv(BUFSIZ)
@@ -55,7 +54,6 @@ def broadcast(msg, prefix=""):  # prefix is for name identification.
         sock.send(bytes(prefix, "utf8") + msg)
 
 
-checkUsers = []
 clients = {}
 addresses = {}
 
