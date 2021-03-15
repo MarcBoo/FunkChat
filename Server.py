@@ -23,7 +23,7 @@ def handle_client(client):  # Takes client socket as argument.
     # delete after leaving does not work properly yet
     name = client.recv(BUFSIZ).decode("utf8")
     if name in clients.values():
-        client.send(bytes("Your name is already taken, bye", "utf8"))
+        client.send(bytes("Your name is already taken!", "utf8"))
         client.close()
         del clients[client]
         broadcast(bytes("%s has left the chat." % name, "utf8"))
