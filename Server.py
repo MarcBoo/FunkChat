@@ -39,10 +39,12 @@ def handle_client(client):  # Takes client socket as argument.
         msg = client.recv(BUFSIZ)
         if msg != bytes("/quit", "utf8"):
             broadcast(msg, name + ": ")
-            if msg == bytes("/whisper", "utf8"):
-                for i in clients.values():
-                    broadcast(bytes(i, "utf8"))
-            
+            if bytes("/whisper", "utf8") in msg:
+                client.send(bytes("type in your target", "utf8"))
+                target = client.recv(BUFSIZ)
+                client.send(bytes("type in your message", "utf8"))
+                targetmsg = client.recv(BUFSIZ)
+                whisper(target, targetmsg)
         else:
             client.send(bytes("/quit", "utf8"))
             client.close()
@@ -58,11 +60,12 @@ def broadcast(msg, prefix=""):  # prefix is for name identification.
         sock.send(bytes(prefix, "utf8") + msg)
 
 
-def whisper(msg, prefix=""):  # prefix is for name identification.
+def whisper(target, targetmsg):  # prefix is for name identification.
     """Whispers a message to a certain client."""
 
     for sock in clients:
-        sock.send(bytes(prefix, "utf8") + msg)
+        if sock == target:
+            sock.send(bytes("prefix", "utf8") + msg)
 
 
 clients = {}
