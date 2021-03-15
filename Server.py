@@ -45,6 +45,7 @@ def handle_client(client):  # Takes client socket as argument.
                 targetmsg = client.recv(BUFSIZ)
                 prefix = clients[client]
                 whisper(target, targetmsg, prefix + ": ")
+                continue
             broadcast(msg, name + ": ")
         else:
             client.send(bytes("/quit", "utf8"))
@@ -62,7 +63,8 @@ def broadcast(msg, prefix=""):  # prefix is for sending name identification.
 
 
 def whisper(target, targetmsg, prefix=""):  
-    """Whispers a message to a certain client."""
+    """Whispers a message to a certain client.
+    Still needs display of message on sending side"""
 
     targetmsg = targetmsg.decode("utf-8")
     for sock, user in clients.items():
