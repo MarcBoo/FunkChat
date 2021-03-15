@@ -20,14 +20,22 @@ def send(event=None):  # event is passed by binders.
     msg = my_msg.get()
     my_msg.set("")  # Clears input field.
     client_socket.send(bytes(msg, "utf8"))
+<<<<<<< Updated upstream
     if msg == "{quit}":
+=======
+    if msg == "/quit":
+>>>>>>> Stashed changes
         client_socket.close()
         top.quit()
 
 
 def on_closing(event=None):
     """This function is to be called when the window is closed."""
+<<<<<<< Updated upstream
     my_msg.set("{quit}")
+=======
+    my_msg.set("/quit")
+>>>>>>> Stashed changes
     send()
 
 top = tkinter.Tk()

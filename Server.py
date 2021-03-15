@@ -28,7 +28,11 @@ def handle_client(client):  # Takes client socket as argument.
         del clients[client]
         broadcast(bytes("%s has left the chat." % name, "utf8"))
     else:
+<<<<<<< Updated upstream
         welcome = 'Welcome %s! If you ever want to quit, type {quit} to exit.' % name
+=======
+        welcome = 'Welcome %s! If you ever want to quit, type /quit to exit.' % name
+>>>>>>> Stashed changes
         client.send(bytes(welcome, "utf8"))
         msg = "%s has joined the chat!" % name
         broadcast(bytes(msg, "utf8"))
@@ -37,10 +41,22 @@ def handle_client(client):  # Takes client socket as argument.
 
     while True:
         msg = client.recv(BUFSIZ)
+<<<<<<< Updated upstream
         if msg != bytes("{quit}", "utf8"):
+=======
+        if msg != bytes("/quit", "utf8"):
+>>>>>>> Stashed changes
             broadcast(msg, name + ": ")
+            if msg == bytes("/whisper", "utf8"):
+                for i in clients.values():
+                    broadcast(bytes(i, "utf8"))
+            
         else:
+<<<<<<< Updated upstream
             client.send(bytes("{quit}", "utf8"))
+=======
+            client.send(bytes("/quit", "utf8"))
+>>>>>>> Stashed changes
             client.close()
             del clients[client]
             broadcast(bytes("%s has left the chat." % name, "utf8"))
@@ -49,6 +65,13 @@ def handle_client(client):  # Takes client socket as argument.
 
 def broadcast(msg, prefix=""):  # prefix is for name identification.
     """Broadcasts a message to all the clients."""
+
+    for sock in clients:
+        sock.send(bytes(prefix, "utf8") + msg)
+
+
+def whisper(msg, prefix=""):  # prefix is for name identification.
+    """Whispers a message to a certain client."""
 
     for sock in clients:
         sock.send(bytes(prefix, "utf8") + msg)
