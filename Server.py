@@ -43,7 +43,8 @@ def handle_client(client):  # Takes client socket as argument.
                 target = client.recv(BUFSIZ)
                 client.send(bytes("type in your message", "utf8"))
                 targetmsg = client.recv(BUFSIZ)
-                whisper(target, targetmsg)
+                prefix = clients[client]
+                whisper(target, targetmsg, prefix + ": ")
             broadcast(msg, name + ": ")
         else:
             client.send(bytes("/quit", "utf8"))
@@ -53,26 +54,22 @@ def handle_client(client):  # Takes client socket as argument.
             break
 
 
-def broadcast(msg, prefix=""):  # prefix is for name identification.
+def broadcast(msg, prefix=""):  # prefix is for sending name identification.
     """Broadcasts a message to all the clients."""
 
     for sock in clients:
         sock.send(bytes(prefix, "utf8") + msg)
 
 
-def whisper(target, targetmsg):  
+def whisper(target, targetmsg, prefix=""):  
     """Whispers a message to a certain client."""
 
-    print(target)
-    print(targetmsg)
     targetmsg = targetmsg.decode("utf-8")
     for sock, user in clients.items():
        
         user = bytes(user, "utf8")
-        print(str(user) + "\n" + str(sock))
         if user == target:
-            print("funktioniert")
-            sock.send(bytes(targetmsg, "utf8"))
+            sock.send(bytes(prefix + "(Whisper) " + targetmsg, "utf8")) #Name of sending user still missing
 
 
 clients = {}
