@@ -33,7 +33,7 @@ def handle_client(client):  # Takes client socket as argument.
         msg = "%s has joined the chat!" % name
         broadcast(bytes(msg, "utf8"))
         clients[client] = name
-        print(clients)
+        print(clients.values())
 
     while True:
         msg = client.recv(BUFSIZ)
