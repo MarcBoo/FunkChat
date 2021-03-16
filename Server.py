@@ -44,6 +44,7 @@ def handle_client(client):  # Takes client socket as argument.
                 client.send(bytes("type in your message", "utf8"))
                 targetmsg = client.recv(BUFSIZ)
                 prefix = clients[client]
+                client.send(bytes(prefix + " (Whisper) to ", "utf8") + target +  bytes(": ","utf8") + targetmsg)
                 whisper(target, targetmsg, prefix + ": ")
                 continue
             broadcast(msg, name + ": ")
