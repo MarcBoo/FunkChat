@@ -37,7 +37,7 @@ def client_control(client):  # Takes client socket as argument.
 
     while True:
         msg = client.recv(BUFSIZ)
-        showUsers()
+        #showUsers()
         if msg != bytes("/quit", "utf8"):
             if bytes("/whisper", "utf8") in msg:
                 client.send(bytes("type in your target", "utf8"))
@@ -82,7 +82,10 @@ def showUsers():
     """Reads out connected Users to requester"""
     for sock in clients:
         for user in clients.values():
-            sock.send(bytes(user, "utf8"))
+            try:
+                sock.send(bytes(user, "utf8"))
+            except Exception:
+                pass
 
 
 
