@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Server for multithreaded (asynchronous) chat application."""
+"""Server Application for our Multithreaded and Asynchronous Chat Application"""
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 
 
-def accept_incoming_connections():
-    """Sets up handling for incoming clients."""
+def client_new_connection():
+    """Controls connections of new clients"""
     while True:
         client, client_address = SERVER.accept()
         print("%s:%s has connected." % client_address)
         client.send(bytes("Now type your name and press enter!", "utf8"))
         addresses[client] = client_address
-        Thread(target=handle_client, args=(client,)).start()
+        Thread(target=client_control, args=(client,)).start()
 
 
-def handle_client(client):  # Takes client socket as argument.
-    """Handles a single client connection."""
+def client_control(client):  # Takes client socket as argument.
+    """Controls interaction with a single client."""
 
 
     # Username saved in name
@@ -47,6 +47,9 @@ def handle_client(client):  # Takes client socket as argument.
                 client.send(bytes(prefix + " (Whisper) to ", "utf8") + target +  bytes(": ","utf8") + targetmsg)
                 whisper(target, targetmsg, prefix + ": ")
                 continue
+            elif bytes("/users", "utf8") in msg:
+                showUsers()
+                continue 
             broadcast(msg, name + ": ")
         else:
             client.send(bytes("/quit", "utf8"))
@@ -74,6 +77,13 @@ def whisper(target, targetmsg, prefix=""):
         if user == target:
             sock.send(bytes(prefix + "(Whisper) " + targetmsg, "utf8")) #Name of sending user still missing
 
+def showUsers():
+    """Reads out connected Users to requester"""
+    for sock in clients:
+        for user in clients.values():
+            sock.send(bytes(user, "utf8"))
+
+
 
 clients = {}
 addresses = {}
@@ -89,7 +99,7 @@ SERVER.bind(ADDR)
 if __name__ == "__main__":
     SERVER.listen(5)
     print("Waiting for connection...")
-    ACCEPT_THREAD = Thread(target=accept_incoming_connections)
+    ACCEPT_THREAD = Thread(target=client_new_connection)
     ACCEPT_THREAD.start()
     ACCEPT_THREAD.join()
     SERVER.close()
