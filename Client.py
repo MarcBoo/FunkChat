@@ -27,7 +27,7 @@ def send(event=None):  # event is passed by binders.
 
 def on_closing(event=None):
     """This function is to be called when the window is closed."""
-    my_msg.set("/quit")
+    my_msg.set("/quit") #Bug , depending on idle wont show to others
     send()
 
 top = tkinter.Tk()
