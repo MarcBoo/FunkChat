@@ -44,10 +44,10 @@ msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 msg_list.pack()
 messages_frame.pack()
 
-entry_field = tkinter.Entry(top, textvariable=my_msg)
+entry_field = tkinter.Entry(top, textvariable=my_msg, width=60)
 entry_field.bind("<Return>", send)
 entry_field.pack()
-send_button = tkinter.Button(top, text="Send", command=send)
+send_button = tkinter.Button(top, text="Send", command=send, bg="grey", fg="white", height=2, width=10)
 send_button.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
