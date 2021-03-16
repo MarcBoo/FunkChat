@@ -57,16 +57,16 @@ top.protocol("WM_DELETE_WINDOW", on_closing)
 
 """ Registered Users """
 top = tkinter.Tk()
-top.title("Registered Users")
+top.title("User")
 
-messages_frame = tkinter.Frame(top)
-scrollbar = tkinter.Scrollbar(messages_frame)  # To navigate through past messages.
+users_frame = tkinter.Frame(top)
+scrollbar = tkinter.Scrollbar(users_frame)  # To navigate through past messages.
 # Following will contain the messages.
-msg_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
+usr_list = tkinter.Listbox(users_frame, height=15, width=30, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
-msg_list.pack()
-messages_frame.pack()
+usr_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
+usr_list.pack()
+users_frame.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
