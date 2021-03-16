@@ -54,6 +54,7 @@ send_button.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
+
 """ Registered Users """
 top = tkinter.Tk()
 top.title("Registered Users")
