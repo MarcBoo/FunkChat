@@ -37,6 +37,7 @@ def client_control(client):  # Takes client socket as argument.
 
     while True:
         msg = client.recv(BUFSIZ)
+        showUsers()
         if msg != bytes("/quit", "utf8"):
             if bytes("/whisper", "utf8") in msg:
                 client.send(bytes("type in your target", "utf8"))
