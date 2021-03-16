@@ -52,25 +52,22 @@ send_button.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
-<<<<<<< HEAD
-=======
 
 """ Registered Users """
 top = tkinter.Tk()
-top.title("Registered Users")
+top.title("Users")
 
-messages_frame = tkinter.Frame(top)
-scrollbar = tkinter.Scrollbar(messages_frame)  # To navigate through past messages.
+users_frame = tkinter.Frame(top)
+scrollbar = tkinter.Scrollbar(users_frame)  # To navigate through past messages.
 # Following will contain the messages.
-msg_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
+usr_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
-msg_list.pack()
+usr_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
+usr_list.pack()
 messages_frame.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
->>>>>>> parent of 09e2d55 (Fix User frame)
 #----Now comes the sockets part----
 HOST = "localhost" # input('Enter host: ')
 PORT = 33000 # input('Enter port: ')
