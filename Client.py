@@ -8,11 +8,14 @@ import tkinter
 def receive():
     """Handles receiving of messages."""
     while True:
-        try:
-            msg = client_socket.recv(BUFSIZ).decode("utf8")
+        msg = client_socket.recv(BUFSIZ)
+        if isinstance(msg, bytearray):
+            msg = msg.decode("utf8")
+            usr_list.insert(tkinter.END, msg)
+        else:
+            msg.decode("utf8")
             msg_list.insert(tkinter.END, msg)
-        except OSError:  # Possibly client has left the chat.
-            break
+        
 
 
 def send(event=None):  # event is passed by binders.

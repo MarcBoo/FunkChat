@@ -80,12 +80,15 @@ def whisper(target, targetmsg, prefix=""):
 
 def showUsers():
     """Reads out connected Users to requester"""
+
+    usrs = []
     for sock in clients:
         for user in clients.values():
-            try:
-                sock.send(bytes(user, "utf8"))
-            except Exception:
-                pass
+            user = user.encode()
+            usrs.append(user)
+    usrs = bytearray(usrs)
+    sock.send(usrs)
+            
 
 
 
