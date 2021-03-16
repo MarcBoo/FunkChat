@@ -54,12 +54,7 @@ top.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 """ Registered Users """
-top = tkinter.Tk()
-top.title("Users")
 
-users_frame = tkinter.Frame(top)
-scrollbar = tkinter.Scrollbar(users_frame)  # To navigate through past messages.
-# Following will contain the messages.
 usr_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 usr_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
@@ -67,6 +62,7 @@ usr_list.pack()
 messages_frame.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
+
 
 #----Now comes the sockets part----
 HOST = "localhost" # input('Enter host: ')
