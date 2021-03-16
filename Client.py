@@ -57,7 +57,6 @@ top.protocol("WM_DELETE_WINDOW", on_closing)
 
 usr_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-usr_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 usr_list.pack()
 messages_frame.pack()
 
