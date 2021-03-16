@@ -47,6 +47,9 @@ def handle_client(client):  # Takes client socket as argument.
                 client.send(bytes(prefix + " (Whisper) to ", "utf8") + target +  bytes(": ","utf8") + targetmsg)
                 whisper(target, targetmsg, prefix + ": ")
                 continue
+            elif bytes("/users", "utf8") in msg:
+                client.send(bytes("This is not yet implemented", "utf8")) #showUsers()
+                continue 
             broadcast(msg, name + ": ")
         else:
             client.send(bytes("/quit", "utf8"))
@@ -73,6 +76,12 @@ def whisper(target, targetmsg, prefix=""):
         user = bytes(user, "utf8")
         if user == target:
             sock.send(bytes(prefix + "(Whisper) " + targetmsg, "utf8")) #Name of sending user still missing
+
+def showUsers():
+    """Reads out connected Users to requester
+    for user in clients.values():
+        client.send(bytes(user,"utf8"))"""
+
 
 
 clients = {}
