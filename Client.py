@@ -3,6 +3,8 @@
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 import tkinter
+from tkinter.ttk import *
+from tkinter import *
 
 
 def receive():
@@ -50,7 +52,8 @@ messages_frame.pack()
 entry_field = tkinter.Entry(top, textvariable=my_msg, width=60)
 entry_field.bind("<Return>", send)
 entry_field.pack()
-send_button = tkinter.Button(top, text="Send", command=send, bg="grey", fg="white", height=2, width=10)
+photo = PhotoImage(file = r"C:\Users\theid\Downloads\Send-Icon-PNG.png")
+send_button = tkinter.Button(top, image = photo, command=send, borderwidth = 0)
 send_button.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
