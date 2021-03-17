@@ -10,7 +10,7 @@ def client_new_connection():
     while True:
         client, client_address = SERVER.accept()
         print("%s:%s has connected." % client_address)
-        client.send(bytes("Now type your name and press enter!", "utf8"))
+        client.send(bytes("Now type your name (w/o special characters or spaces) and press enter!", "utf8"))
         addresses[client] = client_address
         Thread(target=client_control, args=(client,)).start()
 
@@ -27,6 +27,10 @@ def client_control(client):  # Takes client socket as argument.
         client.send(bytes("Your name is already taken!", "utf8"))
         client.close()
         broadcast(bytes("%s has left the chat." % name, "utf8"))
+    elif name in specialCharacters:
+        client.send(bytes("Can't you read?", "utf8"))
+        client.close()
+        broadcast(bytes("%s has left the chat." % name, "utf8"))
     else:
         welcome = 'Welcome %s! If you need further help, type /help.' % name
         client.send(bytes(welcome, "utf8"))
@@ -35,8 +39,15 @@ def client_control(client):  # Takes client socket as argument.
         clients[client] = name
         print(clients.values())
 
+
+
+
+
     while True:
-        msg = client.recv(BUFSIZ)
+        try:
+            msg = client.recv(BUFSIZ)
+        except:
+            continue
         #showUsers()
         if msg != bytes("/quit", "utf8"):
             if bytes("/whisper", "utf8") in msg:
@@ -108,6 +119,7 @@ def showUsers():
 
 clients = {}
 addresses = {}
+specialCharacters = [" ","!","”","#","$","%","&","’","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","]","^","_","`","{","|","}","~"]
 
 HOST = ''
 PORT = 33000
