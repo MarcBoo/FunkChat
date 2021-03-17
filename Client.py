@@ -37,13 +37,15 @@ def on_closing(event=None):
 
 top = tkinter.Tk()
 top.title("Chattool Funk")
+top.resizable(width = False, height = False)
+top.configure(bg = "#17202A")
 
 messages_frame = tkinter.Frame(top)
 my_msg = tkinter.StringVar()  # For the messages to be sent.
 my_msg.set("")
 scrollbar = tkinter.Scrollbar(messages_frame)  # To navigate through past messages.
 # Following will contain the messages.
-msg_list = tkinter.Listbox(messages_frame, height=30, width=100, yscrollcommand=scrollbar.set)
+msg_list = tkinter.Listbox(messages_frame, height=30, width=100, yscrollcommand=scrollbar.set, bg = "#17202A", fg = "#EAECEE",)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 msg_list.pack()
@@ -53,7 +55,7 @@ entry_field = tkinter.Entry(top, textvariable=my_msg, width=60)
 entry_field.bind("<Return>", send)
 entry_field.pack()
 photo = PhotoImage(file = "Send-Icon-PNG.png")
-send_button = tkinter.Button(top, image = photo, command=send, borderwidth = 0)
+send_button = tkinter.Button(top, image = photo, command=send, borderwidth = 0, bg = "#17202A")
 send_button.pack()
 
 top.protocol("WM_DELETE_WINDOW", on_closing)
@@ -61,8 +63,7 @@ top.protocol("WM_DELETE_WINDOW", on_closing)
 
 """ Registered Users """
 
-usr_list = tkinter.Listbox(messages_frame, height=15, width=30, yscrollcommand=scrollbar.set)
-scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+usr_list = tkinter.Listbox(messages_frame, height=30, width=30, bg = "#17202A", fg = "#EAECEE")
 usr_list.pack()
 messages_frame.pack()
 
