@@ -2,6 +2,7 @@
 """Server Application for our Multithreaded and Asynchronous Chat Application"""
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
+import time
 
 
 def client_new_connection():
@@ -27,7 +28,7 @@ def client_control(client):  # Takes client socket as argument.
         client.close()
         broadcast(bytes("%s has left the chat." % name, "utf8"))
     else:
-        welcome = 'Welcome %s! If you ever want to quit, type /quit to exit.' % name
+        welcome = 'Welcome %s! If you need further help, type /help.' % name
         client.send(bytes(welcome, "utf8"))
         msg = "%s has joined the chat!" % name
         broadcast(bytes(msg, "utf8"))
@@ -49,6 +50,14 @@ def client_control(client):  # Takes client socket as argument.
                 continue
             elif bytes("/users", "utf8") in msg:
                 showUsers()
+                continue
+            elif bytes("/help", "utf8") in msg:
+                client.send(bytes("The following commands are possible:","utf8"))
+                client.send(bytes("/quit, to close the application.","utf8"))
+                time.sleep(0.1)
+                client.send(bytes("/whisper, to whisper to another connected user.","utf8"))
+                time.sleep(0.1)
+                client.send(bytes("/users, to show a list of all connected users.","utf8"))
                 continue
             broadcast(msg, name + ": ")
         else:
