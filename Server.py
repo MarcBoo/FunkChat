@@ -50,14 +50,20 @@ def client_control(client):  # Takes client socket as argument.
                 continue
             elif bytes("/users", "utf8") in msg:
                 showUsers()
-                continue 
+                continue
             broadcast(msg, name + ": ")
         else:
-            client.send(bytes("/quit", "utf8"))
-            client.close()
-            del clients[client]
-            broadcast(bytes("%s has left the chat." % name, "utf8"))
-            break
+            try:
+                client.send(bytes("/quit", "utf8"))
+                client.close()
+                del clients[client]
+                broadcast(bytes("%s has left the chat." % name, "utf8"))
+                break
+            except:
+                client.close()
+                del clients[client]
+                broadcast(bytes("%s has left the chat." % name, "utf8"))
+                break
 
 
 def broadcast(msg, prefix=""):  # prefix is for sending name identification.
