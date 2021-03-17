@@ -63,8 +63,7 @@ top.protocol("WM_DELETE_WINDOW", on_closing)
 
 """ Registered Users """
 
-usr_list = tkinter.Listbox(messages_frame, height=30, width=30, yscrollcommand=scrollbar.set, bg = "#17202A", fg = "#EAECEE")
-scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+usr_list = tkinter.Listbox(messages_frame, height=30, width=30, bg = "#17202A", fg = "#EAECEE")
 usr_list.pack()
 messages_frame.pack()
 
