@@ -42,7 +42,7 @@ def client_control(client):  # Takes client socket as argument.
             if bytes("/whisper", "utf8") in msg:
                 client.send(bytes("type in your target", "utf8"))
                 target = client.recv(BUFSIZ)
-                client.send(bytes("type in your message", "utf8"))
+                client.send(bytes("type in your message for %s." % target.decode(), "utf8"))
                 targetmsg = client.recv(BUFSIZ)
                 prefix = clients[client]
                 client.send(bytes(prefix + " (Whisper) to ", "utf8") + target +  bytes(": ","utf8") + targetmsg)
@@ -50,14 +50,20 @@ def client_control(client):  # Takes client socket as argument.
                 continue
             elif bytes("/users", "utf8") in msg:
                 showUsers()
-                continue 
+                continue
             broadcast(msg, name + ": ")
         else:
-            client.send(bytes("/quit", "utf8"))
-            client.close()
-            del clients[client]
-            broadcast(bytes("%s has left the chat." % name, "utf8"))
-            break
+            try:
+                client.send(bytes("/quit", "utf8"))
+                client.close()
+                del clients[client]
+                broadcast(bytes("%s has left the chat." % name, "utf8"))
+                break
+            except:
+                client.close()
+                del clients[client]
+                broadcast(bytes("%s has left the chat." % name, "utf8"))
+                break
 
 
 def broadcast(msg, prefix=""):  # prefix is for sending name identification.
