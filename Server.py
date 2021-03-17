@@ -25,7 +25,6 @@ def client_control(client):  # Takes client socket as argument.
     if name in clients.values():
         client.send(bytes("Your name is already taken!", "utf8"))
         client.close()
-        del clients[client]
         broadcast(bytes("%s has left the chat." % name, "utf8"))
     else:
         welcome = 'Welcome %s! If you ever want to quit, type /quit to exit.' % name
