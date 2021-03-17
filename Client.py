@@ -52,7 +52,7 @@ messages_frame.pack()
 entry_field = tkinter.Entry(top, textvariable=my_msg, width=60)
 entry_field.bind("<Return>", send)
 entry_field.pack()
-photo = PhotoImage(file = r"C:\Users\theid\Downloads\Send-Icon-PNG.png")
+photo = PhotoImage(file = "Send-Icon-PNG.png")
 send_button = tkinter.Button(top, image = photo, command=send, borderwidth = 0)
 send_button.pack()
 
