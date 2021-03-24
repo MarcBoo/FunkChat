@@ -60,7 +60,8 @@ def client_control(client):  # Takes client socket as argument.
                 whisper(target, targetmsg, prefix + ": ")
                 continue
             elif bytes("/users", "utf8") in msg:
-                showUsers()
+                prefix = clients[client]
+                showUsers(prefix)
                 continue
             elif bytes("/help", "utf8") in msg:
                 client.send(bytes("The following commands are possible:","utf8"))
@@ -103,16 +104,15 @@ def whisper(target, targetmsg, prefix=""):
         if user == target:
             sock.send(bytes(prefix + "(Whisper) " + targetmsg, "utf8")) #Name of sending user still missing
 
-def showUsers():
+def showUsers(prefix=""):
     """Reads out connected Users to requester"""
 
-    usrs = []
-    for sock in clients:
-        for user in clients.values():
-            user = user.encode()
-            usrs.append(user)
-    usrs = bytearray(usrs)
-    sock.send(usrs)
+
+    for sock, user in clients.items():
+        if prefix == user:
+            for user in clients.values():
+                sock.send(bytes(user, "utf8"))
+                time.sleep(0.1)
             
 
 
