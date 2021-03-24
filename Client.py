@@ -61,15 +61,6 @@ send_button.pack()
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
 
-""" Registered Users """
-
-usr_list = tkinter.Listbox(messages_frame, height=30, width=30, bg = "#17202A", fg = "#EAECEE")
-usr_list.pack()
-messages_frame.pack()
-
-top.protocol("WM_DELETE_WINDOW", on_closing)
-
-
 #----Now comes the sockets part----
 HOST = "localhost" # input('Enter host: ')
 PORT = 33000 # input('Enter port: ')
